@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        .image-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+        }
+        .image {
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-row" id="imageRow">
+        <!-- Images will be added here dynamically -->
+    </div>
+    <div id="imageDetails" style="text-align: center;"></div>
+    <script>
+        // Function to display image details when clicked
+        function displayImageDetails(temp, status, name) {
+            const detailsDiv = document.getElementById('imageDetails');
+            detailsDiv.innerHTML = `
+                <div style="font-size: 72px;">Name: ${name}</div>
+                <div style="font-size: 72px;">Temperature: ${temp}</div>
+                <div style="font-size: 72px;">Status: ${status}</div>
+            `;
+        }
+
+        // Function to calculate and set image widths dynamically
+        async function setDynamicImageWidths() {
+            const imageRow = document.getElementById('imageRow');
+            const images = Array.from(imageRow.querySelectorAll('.image'));
+
+            // Calculate the total natural width of all images
+            let totalWidth = 0;
+            for (const img of images) {
+                await new Promise((resolve) => {
+                    img.onload = () => {
+                        totalWidth += img.naturalWidth;
+                        resolve();
+                    };
+                });
+            }
+
+            // Calculate the available window width
+            const windowWidth = window.innerWidth;
+
+            // Calculate the scaling factor to fit images within the window width
+            const scaleFactor = windowWidth / totalWidth;
+
+            // Adjust image widths based on the scaling factor
+            images.forEach((img) => {
+                img.style.width = `${img.naturalWidth * scaleFactor}px`;
+            });
+        }
+
+        // Function to load and display images from the JSON file
+        async function loadImages() {
+            const imageRow = document.getElementById('imageRow');
+            
+            try {
+                const response = await fetch('images.json'); // Load image data from JSON file
+                const imageData = await response.json();
+
+                imageData.forEach((imageInfo) => {
+                    const img = document.createElement('img');
+                    img.src = imageInfo.src;
+                    img.classList.add('image');
+                    img.addEventListener('click', () => {
+                        displayImageDetails(imageInfo.temp, imageInfo.status, imageInfo.name);
+                    });
+                    imageRow.appendChild(img);
+                });
+
+                // Set dynamic image widths after all images are added
+                setDynamicImageWidths();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Call the function to load and display images
+        loadImages();
+
+        // Update image widths if the window is resized
+        window.addEventListener('resize', setDynamicImageWidths);
+    </script>
+</body>
+</html>
+

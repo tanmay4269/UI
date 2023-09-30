@@ -1,0 +1,14 @@
+[
+  {"src": "images/sp0.jpg",  "temp": 25, "status": 1, "name": "sp0"},
+  {"src": "images/sp1.jpg",  "temp": 25, "status": 0, "name": "sp1"},
+  {"src": "images/sp2.jpg",  "temp": 35, "status": 1, "name": "sp2"},
+  {"src": "images/sp3.jpg",  "temp": 25, "status": 0, "name": "sp3"},
+  {"src": "images/sp4.jpg",  "temp": 25, "status": 1, "name": "sp4"},
+  {"src": "images/sp5.jpg",  "temp": 20, "status": 1, "name": "sp5"},
+  {"src": "images/sp6.jpg",  "temp": 25, "status": 1, "name": "sp6"},
+  {"src": "images/sp7.jpg",  "temp": 21, "status": 0, "name": "sp7"},
+  {"src": "images/sp8.jpg",  "temp": 34, "status": 0, "name": "sp8"},
+  {"src": "images/sp9.jpg",  "temp": 12, "status": 0, "name": "sp9"},
+  {"src": "images/sp10.jpg", "temp": 25, "status": 1, "name": "sp10"},
+  {"src": "images/sp11.jpg", "temp": 25, "status": 1, "name": "sp11"}
+]
